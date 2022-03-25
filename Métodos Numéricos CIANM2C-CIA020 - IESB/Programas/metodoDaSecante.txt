@@ -1,0 +1,118 @@
+import matplotlib.pyplot as plt
+import math
+from sympy import Symbol
+from scipy.misc import derivative
+import numpy as np
+
+# e = 2.71828182845
+# log = import math and log10()
+# ln = import math and log()
+# Entrada da Função
+f = lambda x: -20 * ((2.71828182845 ** (-0.2 * x)) ) + 5
+
+
+
+
+
+
+
+
+
+
+# Plotagem do gráfico
+a = float(input("Entre com a:"))
+b = float(input("Entre com b:"))
+passo = float(input("Entre com o valor do passo"))
+ab = np.arange(a, b, passo)
+plotting = input("Deseja plotar o grafico da função: y/n")
+if ((plotting == "y") or (plotting == "yes")):
+    plt.plot(ab, f(ab))
+    plt.ylabel('y axis')
+    plt.xlabel('x axis')
+    plt.title("Gráfico da função y = f(x)")
+    plt.grid(True)
+    plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Aproximações iniciais
+
+x0 = float(input("Entre com o chute inicial x0: "))
+x1 = float(input("Entre com o chute final x1: "))
+erro = float(input("Entre com o valor do erro: "))
+
+
+
+# Cálculo de x2
+x2 = (x0 * (f(x1)) - x1 * (f(x0))) / (f(x1) - f(x0))
+
+
+# Critério de parada
+
+# Criação da lista
+
+ROOTS = []
+ROOTS.append(x0)
+ROOTS.append(x1)
+ROOTS.append(x2)
+
+print(ROOTS)
+
+cont = "CONTINUA"
+LIST = []
+LIST.append(x0)
+LIST.append(x1)
+
+
+while (cont == "CONTINUA"):
+    if (abs((f(x2))) > erro):
+        print("CONTINUA")
+        cont = "CONTINUA"
+        x2 = (x0 * (f(x1)) - x1 * (f(x0))) / (f(x1) - f(x0))
+        x0 = x1
+        x1 = x2
+        LIST.append(x2)
+
+
+    else:
+        print("PARA")
+        cont = "PARA"
+
+i = 0
+print(LIST)
+print("\n\n")
+print("RELATÓRIO")
+print("=" * 45)
+print("CHUTE INICIAL")
+print("=" * 45)
+print("X{} = {:.6f}".format(i , LIST[i]))
+print("F(X{}) = {:.6}".format(i, f(LIST[i])))
+print("=" * 45)
+print("\n")
+
+print("CHUTE FINAL")
+print("=" * 45)
+print("X{} = {:.6f}".format(i + 1 , LIST[i + 1]))
+print("F(X{}) = {:.6f}".format(i + 1, f(LIST[i + 1])))
+print("=" * 45)
+print("\n")
+
+while (i < len(LIST)):
+    print("=" * 45)
+    print("ITERAÇÃO {}".format(i + 1))
+    print("X{} = {:.6f}".format(i + 2, LIST[i + 2]))
+    print("F(X{}) = {:.6f}".format(i + 2, f(LIST[i + 2])))
+    print("\n")
+    print("=" * 45)
+    i = i + 1

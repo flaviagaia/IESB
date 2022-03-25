@@ -1,0 +1,76 @@
+# Importação das bibliotecas necessárias
+import matplotlib.pyplot as plt
+from math import *
+from sympy import Symbol
+from scipy.misc import derivative
+import numpy as np
+
+
+# Definição das funções e derivadas
+f = lambda x: x**3 -9*x +3
+fl = lambda x: derivative(f, x0, dx=1e-8)
+
+
+
+
+# Plotagem do gráfico
+a = float(input("Entre com a:"))
+b = float(input("Entre com b:"))
+passo = float(input("Entre com o valor do passo"))
+ab = np.arange(a, b, passo)
+plotting = input("Deseja plotar o grafico da função: y/n")
+if ((plotting == "y") or (plotting == "yes")):
+    plt.plot(ab, f(ab))
+    plt.ylabel('y axis')
+    plt.xlabel('x axis')
+    plt.title("Gráfico da função y = f(x)")
+    plt.grid(True)
+    plt.show()
+
+
+
+# Definição de 'x' como símbolo
+x = Symbol('x')
+
+# Definição do chute inicial e do erro desejado
+x0 = float(input("Qual o valor do chute inicial? Lembre-se de olhar no gráfico!"))
+chuteInicial = x0
+erro = float(input("Qual o valor do erro? "))
+
+
+
+
+# Iteração
+RAIZES = []
+cont = "CONTINUA"
+i = 0                                            # Apenas um contador para indexar a lista RAIZES no documentário
+while (cont == "CONTINUA"):
+
+    # Cálculo da primeira raiz
+    X1 = x0 - f(x0) / fl(x0)
+    print(X1)
+
+    # critério de parada CP
+    if (abs(f(X1)) > erro):
+        print("CONTINUA\n")
+        cont = "CONTINUA"
+        x0 = X1
+
+    else:
+        print("PARA\n")
+        cont = "PARA"
+    RAIZES.append(X1)
+    i = i + 1
+
+
+print("RESULTADOS - FLÁVIA GAIA")
+print('CHUTE INICIAL\t\tX0 = {}'.format(chuteInicial))
+print('VALOR DO ERRO\t\tERRO = {}'.format(erro))
+j = 0
+while (j < i):
+    print("ITERAÇÃO ({})".format(j))
+    print("FUNÇÃO: F(x) = {}".format(f(RAIZES[j])))
+    print("DERIVADA: F'(x) = {}".format( fl(RAIZES[j])))
+    print("X{} = {}".format(j, RAIZES[j]))
+    j = j + 1
+    print("\n")
